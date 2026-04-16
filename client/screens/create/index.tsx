@@ -19,7 +19,9 @@ import DateTimePicker from '@react-native-community/datetimepicker';
 export default function CreateScreen() {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
-  const [deadline, setDeadline] = useState(new Date(Date.now() + 7 * 24 * 60 * 60 * 1000));
+  // 默认截止时间：2026年4月19日
+  const defaultDeadline = new Date(2026, 3, 19, 23, 59, 59);
+  const [deadline, setDeadline] = useState(defaultDeadline);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [showTimePicker, setShowTimePicker] = useState(false);
   const [loading, setLoading] = useState(false);
