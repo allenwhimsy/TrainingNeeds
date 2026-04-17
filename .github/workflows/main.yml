@@ -1,0 +1,28 @@
+name: Build Android APK
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+      - uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+      - uses: android-actions/setup-android@v2
+      - run: cd client && npm install
+      - run: cd client && npx expo prebuild --platform android --clean
+      - run: cd client/android && ./gradlew assembleDebug
+      - uses: actions/upload-artifact@v4
+        with:
+          name: TrainingNeeds-debug
+          path: client/android/app/build/outputs/apk/debug/app-debug.apk
